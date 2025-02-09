@@ -28,6 +28,7 @@
             /* background-image: linear-gradient(160deg, #ff93ff 0, #ae75ff 25%, #5353f2 50%, #0031ae 75%, #001772 100%); */
             background-color: #5353f2;
         }
+        
         #qrcode-container {
             display: none;
             text-align: center;
@@ -90,6 +91,10 @@
         label input:not(:focus) + p{
             color:#7a7a7a56
         }
+
+        #text-center{
+            align-items: center;
+        }
     </style>
 </head>
 <body class="text-center">
@@ -99,7 +104,6 @@
                 <div class="card shadow mb-4" style="background-color: #040404;">
                     <div class="card-body" style="background-color: #040404;"><br>
                         <h1 style="color: #f9f9f9;">Gerador de QRcodes</h1><br>
-                        <p style="color: #f9f9f9; text-align:center;">Esse gerador de QRcodes foi desenvolvido com o intuito de ajudar quem precisa deste serviço...</p><br>
                         <label for="link">
                             <input type="text" id="link" name="link" placeholder=" ">
                             <p>Link</p>
@@ -109,15 +113,9 @@
                         <!-- Container para exibir o QR Code e o texto após gerar -->
                         <div id="qrcode-container">
                             <h1 style="color: #f9f9f9; text-align:center;">Aqui está o seu QRcode!</h1><br>
-                            <div id="qrcode"></div>
-                            <p style="color: #f9f9f9; text-align:center;">
-                                <br>Este é o seu QRcode, para poder usá-lo clique em Baixar e o download será iiniciado.<br>
-                                <br>Tamo junto!
-                            </p>
-                            <div class="text-center">
-                                <button class="btn btn-outline-success my-2 my-sm-0" id="downloadBtn" style="display: none;" onclick="downloadQRCode()">Baixar</button>
-                            </div>
+                            <div id="qrcode"></div> 
                         </div>
+                        <button class="btn btn-outline-success my-2 my-sm-0" id="downloadBtn" style="display: none;" onclick="downloadQRCode()">Baixar</button>
                     </div>
                 </div>
             </div>
@@ -137,11 +135,6 @@
                 width: 200,
                 height: 200
             });
-
-            // document.getElementById('input-container').style.display = 'none';
-            // setTimeout(() => {
-            //     document.getElementById('generateQRCode').style.display = 'block';
-            // }, 500);
 
             document.getElementById('qrcode-container').style.display = 'block';
             setTimeout(() => {
