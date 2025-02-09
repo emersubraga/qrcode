@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerador de QR Code</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            border: none;
+            outline: none;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        html, body{
+            height: 100%;
+        }
+
+        body{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: sans-serif;
+            /* background-image: linear-gradient(160deg, #ff93ff 0, #ae75ff 25%, #5353f2 50%, #0031ae 75%, #001772 100%); */
+            background-color: #5353f2;
+        }
+        #qrcode-container {
+            display: none;
+            text-align: center;
+            margin-top: 20px;
+        }
+        #qrcode {
+            display: inline-flex;
+            padding: 10px;
+            background: white;
+        }
+
+        button{
+            align-items: center;
+        }
+
+        .input-container {
+            text-align: center;
+        }
+        
+        label{
+            position: relative;
+        }
+
+        label input{
+            font-family: sans-serif;
+            font-size: 1.2rem;
+            color: #f9f9f9;
+            background: transparent;
+            padding: 1rem 3.2rem 1rem 1.2rem;
+            min-width: 35rem;
+            border-radius: 0.2rem;
+            border: 2px solid #7a7a7a56;
+            transition: border-color 0.2s;
+        }
+
+        label input:focus{
+            border-color: #2aa6ee;
+        }
+
+        label p{
+            color: #f9f9f9;
+            font-size: 1.2rem;
+            user-select: none;
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            margin-left: 0.8rem;
+            padding: 0 0.4rem;
+            background: #040404;
+            transition: top 0.2s, font-size 0.0s, color 0.2s;
+        }
+
+        label input:focus + p,
+        label input:not(:placeholder-shown) + p {
+            top: 0;
+            font-size: 1rem;
+            color: #2aa6ee;
+        }
+
+        label input:not(:focus) + p{
+            color:#7a7a7a56
+        }
+    </style>
+</head>
+<body class="text-center">
+    <div class="container input-container" id="input-container">
+        <div class="row">
+            <div class="col">
+                <div class="card shadow mb-4" style="background-color: #040404;">
+                    <div class="card-body" style="background-color: #040404;"><br>
+                        <h1 style="color: #f9f9f9;">Gerador de QRcodes</h1><br>
+                        <p style="color: #f9f9f9; text-align:center;">Esse gerador de QRcodes foi desenvolvido com o intuito de ajudar quem precisa deste serviço...</p><br>
+                        <label for="link">
+                            <input type="text" id="link" name="link" placeholder=" ">
+                            <p>Link</p>
+                        </label><br><br>
+                        <button class="btn btn-outline-info my-2 my-sm-0" id="generateQRCode" onclick="generateQRCode()">Gerar QR Code</button>
+                        
+                        <!-- Container para exibir o QR Code e o texto após gerar -->
+                        <div id="qrcode-container">
+                            <h1 style="color: #f9f9f9; text-align:center;">Aqui está o seu QRcode!</h1><br>
+                            <div id="qrcode"></div>
+                            <p style="color: #f9f9f9; text-align:center;">
+                                <br>Este é o seu QRcode, para poder usá-lo clique em Baixar e o download será iiniciado.<br>
+                                <br>Tamo junto!
+                            </p>
+                            <div class="text-center">
+                                <button class="btn btn-outline-success my-2 my-sm-0" id="downloadBtn" style="display: none;" onclick="downloadQRCode()">Baixar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        function generateQRCode() {
+            let link = document.getElementById('link').value;
+            if (!link) {
+                alert('Digite um link válido!');
+                return;
+            }
+            document.getElementById('qrcode').innerHTML = "";
+            let qr = new QRCode(document.getElementById('qrcode'), {
+                text: link,
+                width: 200,
+                height: 200
+            });
+
+            // document.getElementById('input-container').style.display = 'none';
+            // setTimeout(() => {
+            //     document.getElementById('generateQRCode').style.display = 'block';
+            // }, 500);
+
+            document.getElementById('qrcode-container').style.display = 'block';
+            setTimeout(() => {
+                document.getElementById('downloadBtn').style.display = 'block';
+            }, 500);
+
+        }
+
+        function downloadQRCode() {
+            let qrCanvas = document.querySelector('#qrcode canvas');
+            let link = document.createElement('a');
+            link.href = qrCanvas.toDataURL("image/png");
+            link.download = "qrcode.png";
+            link.click();
+        }
+    </script>
+</body>
+</html>
